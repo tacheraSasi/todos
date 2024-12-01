@@ -52,7 +52,7 @@ Each implementation has its own directory with detailed setup instructions and s
    ```bash
    cd reactjs
    # or
-   cd djangoTasks
+   cd djangoTasksApp
    ```
 
 3. Follow the `README.md` in each directory for specific setup instructions.
