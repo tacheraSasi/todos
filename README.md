@@ -5,6 +5,8 @@ Welcome to the ultimate repository that demonstrates how to build Todo applicati
 ## What's Inside
 This repository contains implementations of Todo applications built with different frameworks and data storage options. Here's a quick overview:
 
+## Don't forget to give a star 🌟
+
 ### 1. React with JavaScript
 - **Data Storage**: `localStorage`
 - **Description**: A lightweight Todo app built using React and JavaScript, leveraging the browser's `localStorage` for persistent data.
@@ -54,6 +56,8 @@ Each implementation has its own directory with detailed setup instructions and s
    ```
 
 3. Follow the `README.md` in each directory for specific setup instructions.
+
+
 
 ## Contributing
 We welcome contributions! If you want to add more Todo app implementations or improve existing ones, feel free to open a pull request.
