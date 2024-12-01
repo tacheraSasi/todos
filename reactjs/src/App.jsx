@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+function TodoApp() {
+  const [todos, setTodos] = useState([]); // Array to store todos
+  const [newTodo, setNewTodo] = useState(""); // Input value for the new todo
+
+  // Function to generate a unique ID
+  const generateId = () => Math.random().toString(36).substr(2, 9);
+
+  // Function to add a new todo
+  const addTodo = () => {
+    if (newTodo.trim() === "") return; // Preventing empty todos
+    const todoObject = {
+      id: generateId(),
+      title: newTodo,
+    };
+    setTodos([...todos, todoObject]); // Adding the new todo to the array
+    setNewTodo(""); // Clearing the input field
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
+      <h2>Todo App</h2>
+      <input
+        type="text"
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+        placeholder="Enter a new todo"
+        style={{ padding: "8px", width: "calc(100% - 50px)", marginRight: "10px" }}
+      />
+      <button onClick={addTodo} style={{ padding: "8px" }}>
+        Add
+      </button>
+      <ul style={{ marginTop: "20px", padding: "0", listStyleType: "none" }}>
+        {todos.map((todo) => (
+          <li
+            key={todo.id}
+            style={{
+              padding: "8px",
+              borderBottom: "1px solid #ddd",
+              textAlign: "left",
+            }}
+          >
+            {todo.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default TodoApp;
