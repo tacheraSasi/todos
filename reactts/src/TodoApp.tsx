@@ -6,11 +6,11 @@ interface Todo {
 }
 
 const TodoAppTS: React.FC = () => {
-  // Alright, first things first: managing the state for todos and the new todo input
+  //managing the state for todos and the new todo input
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState<string>("");
 
-  // Here, we'll set up a connection to IndexedDB
+  // setting up a connection to IndexedDB
   useEffect(() => {
     const openDB = async () => {
       const dbRequest = indexedDB.open("todoDB", 1);
@@ -41,7 +41,7 @@ const TodoAppTS: React.FC = () => {
     openDB();
   }, []);
 
-  // Save todos into IndexedDB whenever the todos array changes
+  // Saving todos into IndexedDB whenever the todos array changes
   useEffect(() => {
     const saveTodos = async () => {
       const dbRequest = indexedDB.open("todoDB", 1);
@@ -62,22 +62,22 @@ const TodoAppTS: React.FC = () => {
   }, [todos]);
 
   const generateId = (): string => {
-    // Fun way to generate unique IDs: combine random string and timestamp
+    //combining random string and timestamp to generate a random id
     let time = new Date();
     return Math.random().toString(36).substr(2, 9) + time.toString();
   };
 
   const addTodo = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newTodo.trim() === "") return; // Avoid blank todos
+    if (newTodo.trim() === "") return; // Avoiding blank todos
 
     const todoObject: Todo = {
       id: generateId(),
       title: newTodo,
     };
 
-    setTodos([...todos, todoObject]); // Add the new todo to the list
-    setNewTodo(""); // Clear the input field
+    setTodos([...todos, todoObject]); // Adding the new todo to the list
+    setNewTodo(""); // Clearing the input field
   };
 
   return (
