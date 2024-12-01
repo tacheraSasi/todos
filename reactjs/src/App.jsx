@@ -5,7 +5,11 @@ function TodoApp() {
   const [newTodo, setNewTodo] = useState(""); // Input value for the new todo
 
   // Function to generate a unique ID
-  const generateId = () => Math.random().toString(36).substr(2, 9);
+  const generateId = () => {
+    let time = new Date()
+
+    return Math.random().toString(36).substr(2, 9)+time.toString();
+  };
 
   // Function to add a new todo
   const addTodo = () => {
@@ -14,6 +18,7 @@ function TodoApp() {
       id: generateId(),
       title: newTodo,
     };
+    // Spreading the old todo arra the adding the newTodo to it
     setTodos([...todos, todoObject]); // Adding the new todo to the array
     setNewTodo(""); // Clearing the input field
   };
@@ -26,7 +31,11 @@ function TodoApp() {
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
         placeholder="Enter a new todo"
-        style={{ padding: "8px", width: "calc(100% - 50px)", marginRight: "10px" }}
+        style={{
+          padding: "8px",
+          width: "calc(100% - 50px)",
+          marginRight: "10px",
+        }}
       />
       <button onClick={addTodo} style={{ padding: "8px" }}>
         Add
