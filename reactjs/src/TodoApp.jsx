@@ -6,12 +6,13 @@ function TodoApp() {
 
   // Function to generate a unique ID
   const generateId = () => {
-    let time = new Date()
-    return Math.random().toString(36).substr(2, 9)+time.toString();
+    let time = new Date();
+    return Math.random().toString(36).substr(2, 9) + time.toString();
   };
 
   // Function to add a new todo
-  const addTodo = () => {
+  const addTodo = (e) => {
+    e.preventDefault() //For prevent the dafault browser reload when a form is submitted
     if (newTodo.trim() === "") return; // Preventing empty todos
     const todoObject = {
       id: generateId(),
@@ -25,20 +26,22 @@ function TodoApp() {
   return (
     <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
       <h2>Todo App</h2>
-      <input
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        placeholder="Enter a new todo"
-        style={{
-          padding: "8px",
-          width: "calc(100% - 50px)",
-          marginRight: "10px",
-        }}
-      />
-      <button onClick={addTodo} style={{ padding: "8px" }}>
-        Add
-      </button>
+      <form onSubmit={addTodo}>
+        <input
+          type="text"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          placeholder="Enter a new todo"
+          style={{
+            padding: "8px",
+            width: "calc(100% - 50px)",
+            marginRight: "10px",
+          }}
+        />
+        <button style={{ padding: "8px", width: "100%", marginTop: 6 }}>
+          Add
+        </button>
+      </form>
       <ul style={{ marginTop: "20px", padding: "0", listStyleType: "none" }}>
         {todos.map((todo) => (
           <li
