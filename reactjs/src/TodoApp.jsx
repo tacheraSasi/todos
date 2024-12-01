@@ -19,6 +19,7 @@ function TodoApp() {
     };
 
     setTodos([...todos, todoObject]);
+    console.log(todos)
     setNewTodo("");
   };
 
