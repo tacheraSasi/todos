@@ -1,44 +1,65 @@
 import React, { useState } from "react";
 
 function TodoApp() {
-  const [todos, setTodos] = useState([]); // Array to store todos
-  const [newTodo, setNewTodo] = useState(""); // Input value for the new todo
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
 
-  // Function to generate a unique ID
   const generateId = () => {
     let time = new Date();
     return Math.random().toString(36).substr(2, 9) + time.toString();
   };
 
-  // Function to add a new todo
   const addTodo = (e) => {
-    e.preventDefault() //For prevent the dafault browser reload when a form is submitted
-    if (newTodo.trim() === "") return; // Preventing empty todos
+    e.preventDefault();
+    if (newTodo.trim() === "") return;
+
     const todoObject = {
       id: generateId(),
       title: newTodo,
     };
-    // Spreading the old todo arra the adding the newTodo to it
-    setTodos([...todos, todoObject]); // Adding the new todo to the array
-    setNewTodo(""); // Clearing the input field
+
+    setTodos([...todos, todoObject]);
+    setNewTodo("");
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-      <h2>Todo App</h2>
-      <form onSubmit={addTodo}>
+    <div
+      style={{
+        padding: "20px",
+        maxWidth: "500px",
+        margin: "auto",
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#f7f7f7",
+        borderRadius: "8px",
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <h2 style={{ textAlign: "center", color: "#333" }}>Todo App</h2>
+      <form onSubmit={addTodo} style={{ display: "flex", marginBottom: "20px" }}>
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           placeholder="Enter a new todo"
           style={{
-            padding: "8px",
-            width: "calc(100% - 50px)",
+            flex: 1,
+            padding: "10px",
+            fontSize: "16px",
+            borderRadius: "4px",
+            border: "1px solid #ddd",
             marginRight: "10px",
           }}
         />
-        <button style={{ padding: "8px", width: "100%", marginTop: 6 }}>
+        <button
+          style={{
+            padding: "10px 15px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
           Add
         </button>
       </form>
@@ -47,12 +68,32 @@ function TodoApp() {
           <li
             key={todo.id}
             style={{
-              padding: "8px",
+              padding: "15px",
               borderBottom: "1px solid #ddd",
-              textAlign: "left",
+              borderRadius: "4px",
+              backgroundColor: "#fff",
+              marginBottom: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
           >
-            {todo.title}
+            <span style={{ color: "#333", fontSize: "16px" }}>{todo.title}</span>
+            <button
+              style={{
+                padding: "5px 10px",
+                backgroundColor: "#FF5733",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+              onClick={() =>
+                setTodos(todos.filter((item) => item.id !== todo.id))
+              }
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
