@@ -5,14 +5,18 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"sync"
 )
 
+var tasks []string
+var mu sync.Mutex
 
 func main(){
 	router := http.NewServeMux()
 
-	router.HandleFunc("/",indexHandler)
-	router.HandleFunc("/add",addHandler)
+	router.HandleFunc("GET /",indexHandler)
+	router.HandleFunc("POST /add",addHandler)
+	router.HandleFunc("GET /add",addHandler)
 
 	log.Println("Server is running on http://localhost:3000")
 
@@ -34,6 +38,9 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}){
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request){
+	mu.Lock()
+	defer mu.Unlock()
+	renderTemplate(w,"index.html",tasks)
 
 }
 
