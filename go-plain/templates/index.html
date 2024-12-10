@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Tasks app</title>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <ul>
+        {{range .}}
+        <li>{{.}}</li>
+        {{else}}
+        <p>No tasks found!</p>
+        {{end}}
+    </ul>
+    <a href="/add">Add Task</a>
+</body>
+</html>
