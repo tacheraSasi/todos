@@ -16,7 +16,7 @@ func main(){
 
 	router.HandleFunc("GET /",indexHandler)
 	router.HandleFunc("POST /add",addHandler)
-	router.HandleFunc("GET /add",addHandler)
+	router.HandleFunc("GET /add",showAddPage)
 
 	log.Println("Server is running on http://localhost:3000")
 
@@ -31,7 +31,8 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}){
 	t, err := template.ParseFiles(tmplPath)
 	if err != nil{
 		http.Error(w,"Failed to render the template",http.StatusInternalServerError)
-		log.Fatal("Failed to render the template%s ERR:%v",tmplPath,err)
+		log.Printf("Failed to render the template%s ERR:%v",tmplPath,err)
+		return
 	}
 
 	t.Execute(w,data)
@@ -44,7 +45,28 @@ func indexHandler(w http.ResponseWriter, r *http.Request){
 
 }
 
+func showAddPage(w http.ResponseWriter, r *http.Request){
+
+	renderTemplate(w,"add.html",nil)
+}
 
 func addHandler(w http.ResponseWriter, r *http.Request){
+
+	if r.Method == http.MethodPost{
+		if err := r.ParseForm(); err != nil{
+			http.Error(w, "Error parsing form data", http.StatusBadRequest)
+			log.Println("Form parse error:", err)
+			return
+		}
+
+		task := r.FormValue("task")
+		mu.Lock()
+		tasks = append(tasks, task)
+		mu.Unlock()
+
+		http.Redirect(w,r,"/",http.StatusSeeOther)
+		return
+	}
+
 
 }

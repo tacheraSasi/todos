@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Tasks app</title>
+    <title>Go Tasks App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Tasks</h1>
-    <ul>
-        {{range .}}
-        <li>{{.}}</li>
-        {{else}}
-        <p>No tasks found!</p>
-        {{end}}
-    </ul>
-    <a href="/add">Add Task</a>
+<body class="bg-neutral-100 text-neutral-800 min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <h1 class="text-2xl font-semibold text-center mb-6 text-neutral-900">Tasks</h1>
+        <ul class="list-disc pl-5 space-y-2">
+            {{range .}}
+            <li class="text-neutral-700">{{.}}</li>
+            {{else}}
+            <p class="text-neutral-500 text-center">No tasks found!</p>
+            {{end}}
+        </ul>
+        <div class="text-center mt-6">
+            <a 
+                href="/add" 
+                class="bg-neutral-800 text-white px-6 py-2 rounded-lg hover:bg-neutral-700 transition"
+            >
+                Add Task
+            </a>
+        </div>
+    </div>
 </body>
 </html>
