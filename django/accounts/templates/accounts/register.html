@@ -1,0 +1,15 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<h2 class="dashboard-header">Register</h2>
+<form method="POST" action="{% url 'register-post'%}">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Enter your Username" required>
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <input type="password" name="password" placeholder="Enter your Password" required>
+    <input type="password" name="confirm_password" placeholder="Confirm your Password" required>
+    <button type="submit">Register</button>
+</form>
+{% endblock %}

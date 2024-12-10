@@ -1,0 +1,14 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}DjangoTasks - Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="dashboard-header">Welcome to the Dashboard</h2>
+<ul>
+     {% for task in tasks %}
+        <li>{{task.title}}</li>
+    {% endfor %}
+</ul>
+<p class="dashboard-content">Hello, {{ request.user }}.</p>
+<a href="{% url 'logout' %}" class="nav-link">Logout</a>
+{% endblock %}

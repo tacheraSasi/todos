@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DjangoTasks{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'favicon.png'%}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+        </div>
+        <div class="nav-right">
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'login' %}" class="nav-link">Login</a>
+                <a href="{% url 'register' %}" class="nav-link">Register</a>
+            {% else %}
+                <button class="add-task-btn">Add Task</button>
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">Add New Task</span>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="taskForm" method="post" action="{% url 'task-create'%}">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Task Title" required>
+                <textarea name="desc"  placeholder="Task description" required></textarea>
+                <input type="range" name="progress" value="50" required>
+                <input type="hidden" name="user" value="{{request.user.email}}" required>
+                <input type="hidden" name="from_url" value="" id="from_url">
+                <button type="submit" class="modal-submit">Add Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'accounts/js/main.js' %}"></script>
+</body>
+</html>
